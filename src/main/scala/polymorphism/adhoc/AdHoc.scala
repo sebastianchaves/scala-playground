@@ -1,12 +1,14 @@
 package polymorphism.adhoc
 
-import WithImplicitConversion._
+import polymorphism.adhoc.Example2.Show._
 
 object AdHoc extends App {
 
   def main(): Unit = {
     println(s"WithImplicitConversion: ${WithImplicitConversion.appendItems(1, 2)}")
     println(s"WithTypeClasses: ${WithTypeClasses.appendItems(1, 2)}")
+    println(s"${1.show}")
+    println(s"${"asd".show}")
   }
 
   main()
@@ -49,5 +51,24 @@ object WithTypeClasses {
 
       def greater(a: String, b: String): String = if (a > b) a else b
     }
+  }
+}
+
+object Example2 {
+  trait Show[A] {
+    def show(a: A): String
+  }
+
+  object Show {
+    def apply[A](implicit sh: Show[A]): Show[A] = sh
+
+    def show[A: Show](a: A): String = Show[A].show(a)
+
+    implicit class ShowOps[A: Show](a: A) {
+      def show: String = Show[A].show(a)
+    }
+
+    implicit val showInt: Show[Int] = (a: Int) => s"int $a"
+    implicit val showString: Show[String] = (a: String) => s"string $a"
   }
 }
