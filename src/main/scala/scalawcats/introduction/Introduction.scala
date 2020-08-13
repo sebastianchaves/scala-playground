@@ -11,20 +11,6 @@ object Example extends App {
   println(1.0.toJson)
   println(Person("carlos", 2).toJson)
 
-  val shape = new Shape()
-  val circle = ???
-
-  val shapeWriter: JsonWriter[Shape] = ???
-  val circleWriter: JsonWriter[Circle] = ???
-
-  def format[A](value: A, writer: JsonWriter[A]): Json = writer.write(value)
-
-  format(shape, shapeWriter)
-  format(shape, circleWriter)
-
-  format(circle, shapeWriter)
-  format(circle, circleWriter)
-
 }
 
 sealed trait Json
