@@ -1,6 +1,6 @@
-package scalawcats
+package scalawcats.introduction
 
-import JsonWriter._
+import scalawcats.introduction.JsonWriter._
 
 object Example extends App {
 
@@ -10,6 +10,20 @@ object Example extends App {
   println("asd".toJson)
   println(1.0.toJson)
   println(Person("carlos", 2).toJson)
+
+  val shape = new Shape()
+  val circle = ???
+
+  val shapeWriter: JsonWriter[Shape] = ???
+  val circleWriter: JsonWriter[Circle] = ???
+
+  def format[A](value: A, writer: JsonWriter[A]): Json = writer.write(value)
+
+  format(shape, shapeWriter)
+  format(shape, circleWriter)
+
+  format(circle, shapeWriter)
+  format(circle, circleWriter)
 
 }
 
@@ -23,6 +37,9 @@ case object JsNull extends Json
 
 final case class Person(name: String, age: Int)
 
+class Shape()
+final case class Circle(radius: Double) extends Shape
+
 trait JsonWriter[A] {
   def write(a: A): Json
 }
@@ -31,6 +48,7 @@ object JsonWriter {
   implicit val stringWriter: JsonWriter[String] = (a: String) => JsString(a)
   implicit val numberWriter: JsonWriter[Double] = (d: Double) => JsDouble(d)
   implicit val personWriter: JsonWriter[Person] = (p: Person) => JsObject(Map[String, Json]("name" -> JsString(p.name), "years" -> JsInteger(p.age)))
+
 
   implicit def optionJsonWriter[A](implicit w: JsonWriter[A]): JsonWriter[Option[A]] = {
     case Some(value) => value.toJson(w)

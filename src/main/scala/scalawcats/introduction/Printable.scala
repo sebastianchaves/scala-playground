@@ -1,6 +1,6 @@
-package scalawcats
+package scalawcats.introduction
 
-import Printable._
+import scalawcats.introduction.Printable._
 
 object PrintableExample extends App {
   1.print

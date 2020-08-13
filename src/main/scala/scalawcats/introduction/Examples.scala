@@ -1,14 +1,14 @@
-package scalawcats
+package scalawcats.introduction
 
 import java.util.Date
 
-import cats.{Eq, Show}
 import cats.instances.int._
 import cats.instances.long._
 import cats.instances.option._
 import cats.instances.string._
-import cats.syntax.show._
 import cats.syntax.eq._
+import cats.syntax.show._
+import cats.{Eq, Show}
 
 object ShowExamples extends App {
 
